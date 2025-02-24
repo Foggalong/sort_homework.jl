@@ -35,6 +35,7 @@ Outputs:
 file_dir    = "Submissions/"
 out_dir     = "sorted_homeworks/"
 marksheet   = "Marksheet.xlsx"
+report_file = "output_report.xlsx"
 
 # List of tutors to use (this helps deal with the case where there are
 # extraneous rows in the marksheet)
@@ -92,7 +93,7 @@ rm(out_dir, recursive=true, force=true)
     # Copy each file to the relevant folder 
     for (i, file) in enumerate(student_files)
         ext = match(r"\.\w*$", file).match
-        
+
         # destination path
         if length(student_files) == 1
             dest = joinpath(out_dir, :Tutor, "$(:Username)$ext")
@@ -100,7 +101,7 @@ rm(out_dir, recursive=true, force=true)
             dest = joinpath(out_dir, :Tutor, :Username, "Submission$i$ext")
         end
         mkpath(dest)
-        
+
         # Source path
         src = joinpath(file_dir, file)
 
@@ -110,7 +111,7 @@ end
 
 # cannot yet overwrite the 'Submitted?' column in the Marksheet,
 # so instead this creates a new XLSX with that information.
-# df[!, "Submitted?"] = submission_status
+df[!, "Submitted?"] = submission_status
 # save copy of dataframe, overwriting if it already exists
-rm("output_report.xlsx", force=true)
-XLSX.writetable("output_report.xlsx", df)
+rm(report_file, force=true)
+XLSX.writetable(report_file, df)
