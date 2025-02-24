@@ -3,30 +3,35 @@ Title:  sort_homework.jl
 Author: Jacob Adenbaum
 
 
-Description: This script will sort the homework files by tutor.  There are configurable options (mostly filenames/directory paths) in the top section labelled configuration.  
+Description:
+    This script will sort the homework files by tutor. There are configurable
+    options in the top section labelled 'CONFIGURATION'.
+
+    WARNING: this script clears the output directory and output report file before
+    running. If you are running this script for a second time, and you have made
+    edits or annotations to files in the output folder, be sure to create a backup.
 
 Dependencies:
-    - marksheet: this script uses the current marksheet to read the
-    correspondence between student IDs and Tutor names.  You need to provide the
-    name of the excel file that contains the marksheet
-        NOTE: this script relies on details about how the marksheet is formatted (column names, sheet names, spacing of the header).  You should ensure that the formatting does not change from week to week, otherwise this might break
+    - marksheet: this script uses the current marksheet to read the correspondence
+        between student IDs and Tutor names. You need to provide the name of the
+        excel file that contains the marksheet. NOTE: this script relies on details
+        about how the marksheet is formatted (column names, sheet names, spacing
+        of the header). You should ensure that the formatting does not change from
+        week to week, otherwise this might break.
 
     - file_dir: the directory storing the raw homework files downloaded from Learn 
-    
-    - tutors: I've hardcoded the list of valid tutors in the configuration setting
-        you should ensure that the names are up to date with what is in the marksheet (and that they are consistently capitalized from week to week)
+
+    - tutors: there is a list of valid tutors in the configuration setting. You
+        should ensure that the names are up to date with what is in the marksheet
+        (and that they are consistently capitalized from week to week).
 
 Outputs:
-    - out_dir: this folder contains subfolders with the submissions for
-        each tutor, and where the submissions have been named according to each
-        student's ID.  
+    - out_dir: this folder contains subfolders with the submissions for each tutor,
+        and where the submissions have been named according to each student's ID.
+        If a student has submitted multiple documents, they will be collected in a
+        subfolder together.
 
-        Note: if a student has submitted multiple documents, they will be collected together in a folder together.  
-
-        Note: this script will clear the output directory before running, so if
-        you're running this script for a second time, and you have made edits or
-        annotations to files in the output directory, be sure to create a
-        backup.  
+    - report_file: a file which specifies whether each student submitted work.
 =# 
 
 ################################################################################
