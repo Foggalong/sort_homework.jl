@@ -78,7 +78,11 @@ rm(out_dir, recursive=true, force=true)
         x -> occursin(:Username, x) & !occursin(r"\.txt$", x), 
         files
     )
-    
+
+    if length(student_files) == 0
+        print("Student $(:Username) submitted no files!\n")
+    end
+
     # Copy each file to the relevant folder 
     for (i, file) in enumerate(student_files)
         ext = match(r"\.\w*$", file).match
