@@ -63,10 +63,13 @@ df = XLSX.readtable(marksheet, "Marksheet", first_row = 3) |> DataFrame
 df = @chain df begin
    @rsubset!(:Tutor in tutors)
    @rtransform!(:Username = lowercase(:Username))
-   select!(:Username, :Tutor)
+   select!(:Username, :Tutor, :"Submitted?")
 end
 
 files = readdir("Submissions")
+
+# vector to track whether each student submitted
+submission_status = String[]
 
 ## Loop over all the students
 
@@ -81,6 +84,9 @@ rm(out_dir, recursive=true, force=true)
 
     if length(student_files) == 0
         print("Student $(:Username) submitted no files!\n")
+        push!(submission_status, "No")
+    else
+        push!(submission_status, "Yes")
     end
 
     # Copy each file to the relevant folder 
@@ -101,3 +107,10 @@ rm(out_dir, recursive=true, force=true)
         cp(src, dest, force=true)
     end
 end
+
+# cannot yet overwrite the 'Submitted?' column in the Marksheet,
+# so instead this creates a new XLSX with that information.
+# df[!, "Submitted?"] = submission_status
+# save copy of dataframe, overwriting if it already exists
+rm("output_report.xlsx", force=true)
+XLSX.writetable("output_report.xlsx", df)

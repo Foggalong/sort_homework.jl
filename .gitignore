@@ -1,5 +1,6 @@
 # Project specific files
 .~lock.*
+output_report.xlsx
 sorted_homeworks/
 .vscode
 
