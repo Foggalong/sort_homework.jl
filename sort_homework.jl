@@ -58,7 +58,6 @@ using CSV, DataFrames, DataFramesMeta, Chain
 using XLSX
 
 ## Load the tutor list
-# df = CSV.File("tutor_list.csv") |> DataFrame 
 df = XLSX.readtable(marksheet, "Marksheet", first_row = 3) |> DataFrame
 
 df = @chain df begin
@@ -88,7 +87,7 @@ rm(out_dir, recursive=true, force=true)
         if length(student_files) == 1
             dest = joinpath(out_dir, :Tutor, "$(:Username)$ext")
         else
-            dest = joinpath(out_dir, :Tutor, :Username, "Sumbission$i$ext")
+            dest = joinpath(out_dir, :Tutor, :Username, "Submission$i$ext")
         end
         mkpath(dest)
         
